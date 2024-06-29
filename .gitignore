@@ -1,0 +1,16 @@
+# Ignore vendor folder
+/vendor/
+
+# Ignore Composer dependencies
+/composer.lock
+
+# Ignore log files
+*.log
+
+# Ignore environment files
+.env
+.env.local
+
+# Ignore IDE specific files
+.idea/
+*.iml
