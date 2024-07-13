@@ -11,6 +11,8 @@ const PDF_FORMAT = '.pdf';
 
 function merge_pdfs($pdf_files, $output_file) {
     $pdf = new FPDI();
+    $total_files = count($pdf_files);
+    $processed_files = 0;
 
     foreach($pdf_files as $file){
         $pageCount = $pdf->setSourceFile($file);
@@ -21,6 +23,9 @@ function merge_pdfs($pdf_files, $output_file) {
             $pdf->AddPage($size['orientation'], [$size['width'], $size['height']]);
             $pdf->useTemplate($templateId);
         }
+        $processed_files++;
+        $progress = ($processed_files / $total_files) * 100;
+        echo "\rProcessing... " . (int) $progress . "%";
     }
 
     $pdf->Output('F', OUTPUT_PATH . $output_file);
@@ -66,5 +71,5 @@ $start = microtime(true);
 
 merge_pdfs($pdf_files, $output_name);
 
-echo "Done in " . round(microtime(true) - $start, 3) . "s" . PHP_EOL;
-echo "Successfully merged PDFs into $output_name";
+echo PHP_EOL . "Done in " . round(microtime(true) - $start, 3) . "s" . PHP_EOL;
+echo "Successfully merged PDFs into $output_name" . PHP_EOL;
