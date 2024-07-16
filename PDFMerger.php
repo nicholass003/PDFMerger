@@ -49,8 +49,12 @@ if(!$all_pdf_files){
 $pdf_files = [];
 
 foreach($all_pdf_files as $pdf_file){
-    $file_page = (int) preg_replace('/[^0-9]/', '', $pdf_file);
-    $pdf_files[$file_page] = $pdf_file;
+    $file_page = preg_replace('/[^0-9]/', '', $pdf_file);
+    if($file_page === ""){
+        $pdf_files[] = $pdf_file;
+        continue;
+    }
+    $pdf_files[(int) $file_page] = $pdf_file;
 }
 
 ksort($pdf_files);
